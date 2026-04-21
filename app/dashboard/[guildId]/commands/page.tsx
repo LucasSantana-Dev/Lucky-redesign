@@ -16,16 +16,17 @@ import {
 import { cn } from '@/lib/utils';
 
 const INITIAL_COMMANDS = [
-  { id: '1', name: '!rules', type: 'Text', category: 'Utility', used: '1,248', status: 'Active', response: 'Please read our community rules in #info.' },
-  { id: '2', name: '!rank', type: 'Dynamic', category: 'Fun', used: '45,092', status: 'Active', response: 'Your current level is {level}.' },
-  { id: '3', name: '!socials', type: 'Embed', category: 'Utility', used: '842', status: 'Active', response: 'Check out our Twitter and Discord links!' },
-  { id: '4', name: '!ban', type: 'Action', category: 'Admin', used: '12', status: 'Restricted', response: 'Banning user for harassment.' },
-  { id: '5', name: '!promo', type: 'Text', category: 'Marketing', used: '3,102', status: 'Active', response: 'Get 20% off with code LUCKY20.' },
+  { id: '1', name: '!rules', type: 'Text', category: 'Utility', usage: { '7d': 142, '30d': 620, 'allTime': 1248 }, status: 'Active', response: 'Please read our community rules in #info.' },
+  { id: '2', name: '!rank', type: 'Dynamic', category: 'Fun', usage: { '7d': 5210, '30d': 22100, 'allTime': 45092 }, status: 'Active', response: 'Your current level is {level}.' },
+  { id: '3', name: '!socials', type: 'Embed', category: 'Utility', usage: { '7d': 92, '30d': 410, 'allTime': 842 }, status: 'Active', response: 'Check out our Twitter and Discord links!' },
+  { id: '4', name: '!ban', type: 'Action', category: 'Admin', usage: { '7d': 2, '30d': 5, 'allTime': 12 }, status: 'Restricted', response: 'Banning user for harassment.' },
+  { id: '5', name: '!promo', type: 'Text', category: 'Marketing', usage: { '7d': 420, '30d': 1850, 'allTime': 3102 }, status: 'Active', response: 'Get 20% off with code LUCKY20.' },
 ];
 
 export default function CustomCommandsPage() {
   const [commands, setCommands] = React.useState(INITIAL_COMMANDS);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [timeframe, setTimeframe] = React.useState<'7d' | '30d' | 'allTime'>('allTime');
 
   const toggleCommand = (id: string) => {
     setCommands(prev => prev.map(cmd => {
@@ -39,10 +40,14 @@ export default function CustomCommandsPage() {
     }));
   };
 
-  const filteredCommands = commands.filter(cmd => 
-    cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    cmd.response.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredCommands = React.useMemo(() => {
+    return commands
+      .filter(cmd => 
+        cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        cmd.response.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => b.usage[timeframe] - a.usage[timeframe]);
+  }, [commands, searchQuery, timeframe]);
   return (
     <div className="space-y-8 animate-in fade-in duration-700 slide-in-from-bottom-4">
       {/* Page Header */}
@@ -70,8 +75,8 @@ export default function CustomCommandsPage() {
         {/* Left Column: List Console */}
         <div className="xl:col-span-3 space-y-6">
            <div className="bg-sidebar rounded-2xl border border-panel overflow-hidden">
-             <div className="p-4 border-b border-panel flex items-center gap-4 bg-sidebar/50">
-                <div className="relative flex-1">
+             <div className="p-4 border-b border-panel flex flex-col md:flex-row items-start md:items-center gap-4 bg-sidebar/50">
+                <div className="relative flex-1 w-full">
                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted" />
                    <input 
                      type="text" 
@@ -81,8 +86,25 @@ export default function CustomCommandsPage() {
                      className="w-full bg-elevated border border-panel rounded-lg py-1.5 pl-9 pr-3 text-xs focus:ring-1 focus:ring-brand-discord" 
                    />
                 </div>
-                <div className="h-6 w-px bg-panel" />
-                <button className="p-1.5 hover:bg-panel rounded text-text-muted"><Settings2 className="w-4 h-4" /></button>
+                <div className="flex items-center bg-elevated border border-panel rounded-lg p-0.5">
+                   {(['7d', '30d', 'allTime'] as const).map((t) => (
+                      <button
+                        key={t}
+                        onClick={() => setTimeframe(t)}
+                        className={cn(
+                          "px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all",
+                          timeframe === t ? "bg-highlight text-text-strong shadow-sm" : "text-text-muted hover:text-text-body"
+                        )}
+                      >
+                        {t === 'allTime' ? 'All-Time' : t}
+                      </button>
+                   ))}
+                </div>
+                <div className="hidden md:block h-6 w-px bg-panel" />
+                <button className="p-1.5 hover:bg-panel rounded text-text-muted shrink-0 flex items-center gap-2">
+                   <Settings2 className="w-4 h-4" />
+                   <span className="text-xs font-bold md:hidden">Settings</span>
+                </button>
              </div>
 
              <div className="overflow-x-auto">
@@ -113,7 +135,7 @@ export default function CustomCommandsPage() {
                                <span className="text-[10px] font-mono bg-elevated border border-panel px-2 py-0.5 rounded uppercase">{cmd.category}</span>
                             </td>
                             <td className="px-6 py-4">
-                               <p className="font-mono text-xs text-text-muted">{cmd.used}</p>
+                               <p className="font-mono text-xs text-text-strong">{cmd.usage[timeframe].toLocaleString()}</p>
                             </td>
                             <td className="px-6 py-4">
                                <div className="flex items-center justify-between gap-4">

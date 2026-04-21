@@ -52,9 +52,11 @@ export default function LandingPage() {
             Redesign 2.0 Live
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sora font-medium leading-[0.9] tracking-tight mb-8">
-            <span className="text-text-strong">Precision control for</span><br />
-            <span className="discord-gradient text-transparent bg-clip-text italic">modern Discord guilds.</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-sora font-bold leading-[1.1] tracking-tighter mb-8 max-w-5xl mx-auto">
+            <span className="text-text-strong block">Precision control for</span>
+            <span className="discord-gradient block w-fit mx-auto">
+              modern Discord guilds.
+            </span>
           </h1>
           
           <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto leading-relaxed mb-12">

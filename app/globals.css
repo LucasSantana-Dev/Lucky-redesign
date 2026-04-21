@@ -40,6 +40,9 @@
 @layer utilities {
   .discord-gradient {
     background: linear-gradient(135deg, var(--color-lucky-neon-pink) 0%, var(--color-lucky-neon-orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .surface-panel {
