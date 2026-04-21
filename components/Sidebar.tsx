@@ -13,7 +13,12 @@ import {
   LayoutDashboard,
   MessageSquare,
   Menu,
-  ChevronRight
+  ChevronRight,
+  ScrollText,
+  Layout,
+  Star,
+  Activity,
+  UserPlus
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
@@ -30,37 +35,37 @@ const NAV_GROUPS = [
     items: [
       { label: 'Incident Console', icon: ShieldAlert, href: '/dashboard/[guildId]/moderation' },
       { label: 'Automod', icon: Zap, href: '/dashboard/[guildId]/automod' },
-      { label: 'Server Logs', icon: LayoutDashboard, href: '/dashboard/[guildId]/logs' },
+      { label: 'Server Logs', icon: ScrollText, href: '/dashboard/[guildId]/logs' },
     ]
   },
   {
     label: 'Automation',
     items: [
       { label: 'Custom Commands', icon: MessageSquare, href: '/dashboard/[guildId]/commands' },
-      { label: 'Auto Messages', icon: MessageSquare, href: '/dashboard/[guildId]/auto-messages' },
-      { label: 'Embed Builder', icon: LayoutDashboard, href: '/dashboard/[guildId]/embeds' },
-      { label: 'Reaction Roles', icon: Users, href: '/dashboard/[guildId]/roles' },
+      { label: 'Auto Messages', icon: Activity, href: '/dashboard/[guildId]/auto-messages' },
+      { label: 'Embed Builder', icon: Layout, href: '/dashboard/[guildId]/embeds' },
+      { label: 'Reaction Roles', icon: UserPlus, href: '/dashboard/[guildId]/roles' },
     ]
   },
   {
     label: 'Community',
     items: [
       { label: 'Levels', icon: Users, href: '/dashboard/[guildId]/levels' },
-      { label: 'Starboard', icon: LayoutDashboard, href: '/dashboard/[guildId]/starboard' },
+      { label: 'Starboard', icon: Star, href: '/dashboard/[guildId]/starboard' },
     ]
   },
   {
     label: 'Media',
     items: [
       { label: 'Music Deck', icon: Music2, href: '/dashboard/[guildId]/music' },
-      { label: 'History', icon: MessageSquare, href: '/dashboard/[guildId]/music/history' },
+      { label: 'History', icon: History, href: '/dashboard/[guildId]/music/history' },
     ]
   },
   {
     label: 'Advanced',
     items: [
-      { label: 'Integrations', icon: Zap, href: '/dashboard/[guildId]/integrations' },
-      { label: 'Settings', icon: Settings2, href: '/dashboard/[guildId]/settings' },
+      { label: 'Integrations', icon: Settings2, href: '/dashboard/[guildId]/integrations' },
+      { label: 'Settings', icon: LayoutDashboard, href: '/dashboard/[guildId]/settings' },
     ]
   }
 ];

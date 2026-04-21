@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { 
@@ -11,7 +13,6 @@ import {
   MessageSquare,
   Waves
 } from 'lucide-react';
-import { motion } from 'motion/react';
 
 export default function LandingPage() {
   return (
@@ -54,7 +55,7 @@ export default function LandingPage() {
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-sora font-bold leading-[1.1] tracking-tighter mb-8 max-w-5xl mx-auto">
             <span className="text-text-strong block">Precision control for</span>
-            <span className="discord-gradient block w-fit mx-auto">
+            <span className="discord-gradient inline mt-2">
               modern Discord guilds.
             </span>
           </h1>
